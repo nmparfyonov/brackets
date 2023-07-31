@@ -1,4 +1,4 @@
-module.exports = function check(str, bracketsConfig) {
+/* module.exports = function check(str, bracketsConfig) {
   const pairs = bracketsConfig.map(a => a.join(''))
   let temp = ''
   while (str.length != temp.length) {
@@ -8,14 +8,12 @@ module.exports = function check(str, bracketsConfig) {
     })
   }
   return str.length === 0
-}
+} */
 
-/* module.exports = function check(str, bracketsConfig) {
-  const regex = new RegExp(bracketsConfig.map(a => '\\' + a.join('\\')).join('|'))
-  let temp = ''
-  while (str.length != temp.length) {
-    temp = str
-    str = str.replace(regex, '')
+module.exports = function check(str, bracketsConfig) {
+  const pairs = new RegExp(bracketsConfig.map(a => a.map(x => '[\\x' + x.charCodeAt(0).toString(16) + ']').join('')).join('|'))
+  while (pairs.test(str)) {
+    str = str.replace(pairs, '')
   }
   return str.length === 0
-} */
+}
